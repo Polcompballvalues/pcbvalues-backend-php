@@ -1,0 +1,3 @@
+*.html -linguist-detectable
+lib/*.min.css -linguist-detectable
+lib/*.min.js -linguist-detectable
