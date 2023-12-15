@@ -1,6 +1,6 @@
 {
   "name": "pcbvalues-backend-php",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Score submission backend server for pcbvalues.github.io",
   "main": "public_html/index.php",
   "scripts": {

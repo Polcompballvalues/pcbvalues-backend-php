@@ -1,3 +1,14 @@
+$double-arrow: 'm19.589 34.829 1.117 2.123H18.47zm0 5.043 1.117-2.123H18.47z';
+$top-arrow: 'm19.589 34.829 1.117 2.123H18.47z';
+$bottom-arrow: 'm19.589 39.872 1.117-2.123H18.47z';
+
+@function generate-svg($path) {
+    $chunk-1: '%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2220%22%20viewBox%3D%220%200%202.646%205.292%22%3E%3Cpath%20d%3D%22';
+    $chunk-2: '%22%20style%3D%22fill%3A%23333%3Bstroke%3A%23676767%3Bstroke-width%3A.248287%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3Bstroke-dasharray%3Anone%3Bstroke-opacity%3A1%3Bpaint-order%3Astroke%20fill%20markers%22%20transform%3D%22translate(-18.266%20-34.705)%22%2F%3E%3C%2Fsvg%3E';
+    $full-svg: $chunk-1 + $path + $chunk-2;
+    @return 'data:image/svg+xml;utf8,' + $full-svg;
+}
+
 html {
     width: 100%;
 }
@@ -12,7 +23,8 @@ body {
 
 table {
     margin: 0 auto;
-    padding-right: 20px;
+    padding-right: 12px;
+    position: relative;
 }
 
 th {
@@ -40,6 +52,30 @@ tbody tr {
 
 thead tr th {
     background-color: #999;
+    cursor: pointer;
+    line-height: 28px;
+    padding-right: 12px;
+    position: sticky;
+    top: 0;
+
+    &::after {
+        content: url(generate-svg($double-arrow));
+        position: absolute;
+        padding-left: 2px;
+        padding-top: 2px;
+    }
+
+    &.sorted {
+        &::after {
+            content: url(generate-svg($top-arrow));
+        }
+
+        &.reverse {
+            &::after {
+                content: url(generate-svg($bottom-arrow));
+            }
+        }
+    }
 }
 
 button {
@@ -53,8 +89,8 @@ button {
 }
 
 .scrollable {
-    overflow-y: scroll;
-    height: calc(100vh - 230px);
+    overflow:auto;
+    max-height: calc(100vh - 230px);
     width: fit-content;
     border: 4px solid;
     border-radius: 4px;

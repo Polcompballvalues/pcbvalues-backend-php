@@ -109,8 +109,10 @@ function generate_table(array $headers, array $rows): string
     $h_count = count($headers);
 
     $tagged_headers = array_map(
-        fn ($val): string => '<th>' . htmlspecialchars($val) . '</th>',
-        $headers
+        fn ($val, $index): string => ($index > 0 ? '<th>' : '<th class="sorted">') .
+            htmlspecialchars($val) . '</th>',
+        $headers,
+        array_keys($headers)
     );
 
     $heading = '<thead><tr>' . implode('', $tagged_headers) . '</tr></thead>';
