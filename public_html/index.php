@@ -25,7 +25,7 @@ $headers = [
 <head>
     <meta charset="UTF-8" />
     <title>PCBValues scores backend</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         <?php include '../lib/style.min.css'; ?>
     </style>

@@ -78,6 +78,16 @@ thead tr th {
     }
 }
 
+thead tr th:first-child, 
+tbody tr td:first-child {
+    position: sticky;
+    left: 0;
+}
+
+thead tr th:first-child {
+    z-index: 1;
+}
+
 button {
     font-weight: bold;
     background-color: #F00;
@@ -90,7 +100,8 @@ button {
 
 .scrollable {
     overflow:auto;
-    max-height: calc(100vh - 230px);
+    max-height: calc(95vh - 230px);
+    max-width: 98vw;
     width: fit-content;
     border: 4px solid;
     border-radius: 4px;
@@ -119,7 +130,7 @@ button {
     }
 }
 
-@media (max-width:500px) {
+@media screen and (max-width: 500px){
     .github-corner:hover .octo-arm {
         animation: none
     }
