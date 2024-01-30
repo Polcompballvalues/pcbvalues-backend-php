@@ -1,6 +1,8 @@
 <?php
 include '../lib/auxiliary.php';
 
+header('Content-Type: application/xhtml+xml');
+
 $users = fetch_json(GITHUB::USERLIST);
 
 $flat_users = array_map(
@@ -20,12 +22,12 @@ $headers = [
 ];
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <title>PCBValues scores backend</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <style>
         <?php include '../lib/style.min.css'; ?>
     </style>
@@ -51,7 +53,9 @@ $headers = [
         </div>
     </div>
     <script type="module">
-        <?php include '../lib/script.min.js'; ?>
+    // <![CDATA[
+    <?php include '../lib/script.min.js'; ?>
+    // ]]>
     </script>
 </body>
 

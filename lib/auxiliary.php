@@ -59,7 +59,7 @@ function last_commit(): string
 
     $dt = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $commit_date);
 
-    $author_link = '<a href=https://github.com/' . urlencode($author) . ">$author</a>";
+    $author_link = '<a href="https://github.com/' . urlencode($author) . "\">$author</a>";
 
     return $dt->format('d/M/Y @ H:i') . ' (UTC) by ' . $author_link;
 }

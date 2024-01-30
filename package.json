@@ -1,12 +1,12 @@
 {
   "name": "pcbvalues-backend-php",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Score submission backend server for pcbvalues.github.io",
   "main": "public_html/index.php",
   "scripts": {
     "build-scss": "sass src/style.scss:lib/style.min.css --no-source-map --style=compressed",
     "build-ts": "tsc && terser --compress --mangle --module --output lib/script.min.js lib/index.js && rm lib/index.js",
-    "build": ""
+    "build": "tsc && terser --compress --mangle --module --output lib/script.min.js lib/index.js && rm lib/index.js && sass src/style.scss:lib/style.min.css --no-source-map --style=compressed"
   },
   "author": "TheGhostOfInky",
   "license": "GPL-3.0-or-later",
