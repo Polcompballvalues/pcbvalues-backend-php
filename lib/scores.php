@@ -1,6 +1,21 @@
 <?php
 
 /**
+ * Safely returns am optional key from an array without raising a warning
+ * @template T
+ * @param array<T> $arr Array of T
+ * @param string $key string key to find
+ * @return T|null Either a value or null if not found
+ */
+function arr_get(array $arr, string $key)
+{
+    if (!array_key_exists($key, $arr)) {
+        return NULL;
+    }
+    return $arr[$key];
+}
+
+/**
  * Class representing, parsing, validating and exporting a set of scores.
  */
 class Scores
@@ -27,17 +42,17 @@ class Scores
     /**
      * Constructs new instance of Scores class based on the parsed data
      * @param array $data_obj Associative array version of the submitted data
-     * @param array $user_agent Nullable string representing the request's user agent
+     * @param ?string $user_agent Nullable string representing the request's user agent
      */
     function __construct(array $data_obj, ?string $user_agent)
     {
-        $this->name = $data_obj['name'];
-        $this->scores = $data_obj['vals'];
-        $this->timestamp = $data_obj['time'];
-        $this->edition = $data_obj['edition'];
-        $this->hash = $data_obj['digest'];
-        $this->takes = $data_obj['takes'];
-        $this->version = $data_obj['version'];
+        $this->name = arr_get($data_obj, 'name');
+        $this->scores = arr_get($data_obj, 'vals');
+        $this->timestamp = arr_get($data_obj, 'time');
+        $this->edition = arr_get($data_obj, 'edition');
+        $this->hash = arr_get($data_obj, 'digest');
+        $this->takes = arr_get($data_obj, 'takes');
+        $this->version = arr_get($data_obj, 'version');
 
         $this->user_agent = $user_agent;
     }
@@ -191,7 +206,7 @@ class Scores
     {
         $data = [
             'name' => $this->name,
-            'values' => $this->scores
+            'stats' => $this->scores
         ];
 
         $username = $this->md_sanitize($this->name);
@@ -204,17 +219,19 @@ class Scores
         $now = new DateTime();
         $sub_timestamp = $now->format(Scores::DT_FMT);
         $ans_timestamp = $this->parse_ts($this->timestamp);
+        $pretty_body = json_encode($data, JSON_PRETTY_PRINT);
 
-        return "**User:** $username" . PHP_EOL .
-            "**Time Submitted:** $sub_timestamp (UTC)" . PHP_EOL .
-            "**Time Answered:** $ans_timestamp (UTC)" . PHP_EOL .
-            "**Edition:** $edition" . PHP_EOL .
-            "**Authenticity:** $authenticity" . PHP_EOL .
-            "**Takes**: $takes" . PHP_EOL .
-            "**User Agent:** $user_agent" . PHP_EOL .
-            "**Version:** $version" . PHP_EOL .
-            '```json' . PHP_EOL .
-            json_encode($data, JSON_PRETTY_PRINT) . PHP_EOL .
-            '```';
+        return <<<MD
+        **User:** $username
+        **Time Submitted:** $sub_timestamp (UTC)
+        **Edition:** $edition
+        **Authenticity:** $authenticity
+        **Takes**: $takes
+        **User Agent:** $user_agent
+        **Version:** $version
+        ```json
+        $pretty_body
+        ```
+        MD;
     }
 }
